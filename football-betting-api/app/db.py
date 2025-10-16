@@ -1,3 +1,8 @@
+# app/db.py
+from config import settings
+print(f"DATABASE_URL RAW: {settings.DATABASE_URL!r}")
+
+
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 from config import settings
