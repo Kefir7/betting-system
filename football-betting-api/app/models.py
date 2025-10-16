@@ -15,7 +15,6 @@ class Match(Base):
     away_goals = Column(Integer, nullable=True)
     result = Column(String, nullable=True)
 
-    # ------------------ Prototype ------------------
     def clone(self):
         return copy.deepcopy(self)
 

@@ -4,11 +4,10 @@ from datetime import datetime, timezone
 from sqlalchemy.orm import Session
 from app import crud, schemas
 from app.db import SessionLocal
+from config import settings
 
-API_KEY = "ef098c42956545159b5b8c7b2164ba81"
-COMPETITION = "PL"
-URL = f"https://api.football-data.org/v4/competitions/{COMPETITION}/matches"
-HEADERS = {"X-Auth-Token": API_KEY}
+URL = f"https://api.football-data.org/v4/competitions/{settings.FOOTBALL_COMPETITION}/matches"
+HEADERS = {"X-Auth-Token": settings.FOOTBALL_API_KEY}
 
 def fetch_matches():
     db: Session = SessionLocal()

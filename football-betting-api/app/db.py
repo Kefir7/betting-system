@@ -1,21 +1,17 @@
-# app/db.py
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
+from config import settings
 
-# ------------------ Singleton ------------------
 class EngineSingleton:
     _instance = None
 
     @staticmethod
-    def get_instance(database_url):
+    def get_instance():
         if EngineSingleton._instance is None:
-            EngineSingleton._instance = create_engine(database_url)
+            EngineSingleton._instance = create_engine(settings.DATABASE_URL)
         return EngineSingleton._instance
 
-DATABASE_URL = "postgresql+psycopg2://postgres:Grekov1907@localhost:5432/football_betting"
-engine = EngineSingleton.get_instance(DATABASE_URL)
-
-# ------------------ Factory Method ------------------
+engine = EngineSingleton.get_instance()
 SessionLocal = sessionmaker(bind=engine)
 Base = declarative_base()
 
@@ -25,3 +21,7 @@ def get_db():
         yield db
     finally:
         db.close()
+        
+def init_db():
+    from app import models
+    Base.metadata.create_all(bind=engine)
